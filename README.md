@@ -1,5 +1,5 @@
-# path_finding_visualizer
-Path finding visualizer implementing A* search algorithm
+# Python path finding visualizer
+Path finding visualizer implementing A* search algorithm using pygame
 ![alt text](https://github.com/skokcmd/path_finding_visualizer/blob/main/pf_img.png)
 
 
