@@ -30,10 +30,11 @@ left click = barrier
 right click = reset
 """
 def handle_mouse_click(data_grid: [[Node]], row: int, col: int) -> None:
+    square: Node = data_grid[row][col]
     if pygame.mouse.get_pressed()[0]:
-        data_grid[row][col].make_barrier()
+        square.make_barrier()
     if pygame.mouse.get_pressed()[2]:
-        data_grid[row][col].reset()
+        square.reset()
 
 
 """
