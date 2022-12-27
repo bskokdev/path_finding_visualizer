@@ -15,6 +15,8 @@ def get_mouse_pos(square_size: int) -> tuple[int, int]:
 """
 Euclidean distance
 """
+
+
 def get_eucl_dist(x1: int, x2: int, y1: int, y2: int) -> int:
     return ((x1 - x2) ** 2) + ((y1 - y2) ** 2)
 
@@ -22,5 +24,7 @@ def get_eucl_dist(x1: int, x2: int, y1: int, y2: int) -> int:
 """
 Manhattan distance
 """
+
+
 def get_manh_distance(x1: int, x2: int, y1: int, y2: int) -> int:
     return abs(x2 - x1) + abs(y2 - y1)

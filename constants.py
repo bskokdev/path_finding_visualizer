@@ -13,7 +13,7 @@ SIZES
 WINDOW_HEIGHT = 600
 WINDOW_WIDTH = 600
 SQUARE_SIZE = 20
-NODE_GRID_SIDE_SIZE = (WINDOW_HEIGHT // SQUARE_SIZE)
+NODE_GRID_SIDE_SIZE = WINDOW_HEIGHT // SQUARE_SIZE
 
 """
 runtime args - refer to main
@@ -22,5 +22,3 @@ runtime args - refer to main
 [2] = is_running
 """
 RUNTIME_ARGS_COUNT = 3
-
-

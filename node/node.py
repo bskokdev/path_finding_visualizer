@@ -6,6 +6,8 @@ from constants import SQUARE_SIZE
 """
 This class represents a single square in the grid
 """
+
+
 class Node:
     def __init__(self, row: int, col: int, node_type: NodeType):
         self.row = row
@@ -17,7 +19,11 @@ class Node:
         self.total_cost: int = 0
 
     def draw(self, window) -> None:
-        pygame.draw.rect(window, self.type.value, (self.row * SQUARE_SIZE, self.col * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
+        pygame.draw.rect(
+            window,
+            self.type.value,
+            (self.row * SQUARE_SIZE, self.col * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE),
+        )
 
     def make_end(self) -> None:
         self.type = NodeType.END

@@ -5,6 +5,8 @@ from constants import GREEN, RED, BLACK, WHITE, BLUE
 """
 This class represents type of each square in the grid
 """
+
+
 class NodeType(Enum):
     END = RED
     BARRIER = BLACK
@@ -12,4 +14,3 @@ class NodeType(Enum):
     OPEN = GREEN
     CLOSED = RED
     PATH = BLUE
-

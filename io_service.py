@@ -12,7 +12,16 @@ This function checks for valid start or end position
 if the position is valid node and coordinates list at the given position are modified
 otherwise error message is printed
 """
-def checkPosition(position_type: str, is_taken: bool, modify_node, coordinates: list[int, int], row: int, col: int) -> None:
+
+
+def checkPosition(
+    position_type: str,
+    is_taken: bool,
+    modify_node,
+    coordinates: list[int, int],
+    row: int,
+    col: int,
+) -> None:
     if position_type == "start" and is_taken:
         print("Only one starting position!")
     elif position_type == "end" and is_taken:
@@ -29,6 +38,8 @@ this function handles mouse click of the user
 left click = barrier
 right click = reset
 """
+
+
 def handle_mouse_click(data_grid: [[Node]], row: int, col: int) -> None:
     square: Node = data_grid[row][col]
     if pygame.mouse.get_pressed()[0]:
@@ -43,16 +54,29 @@ S = select start position
 E = select end position
 P = find the shortest path
 """
-def handle_keyboard_input(event, grid: Grid, row: int, col: int, runtime: [bool], start_position, end_position) -> None:
+
+
+def handle_keyboard_input(
+    event, grid: Grid, row: int, col: int, runtime: [bool], start_position, end_position
+) -> None:
     # doesn't allow any strokes during path finding
     if event.type == pygame.KEYDOWN and not runtime[2]:
         """Start position"""
         if event.key == pygame.K_s:
-            checkPosition("start", runtime[0], grid.data[row][col].make_path, start_position, row, col)
+            checkPosition(
+                "start",
+                runtime[0],
+                grid.data[row][col].make_path,
+                start_position,
+                row,
+                col,
+            )
             runtime[0] = True
         """End position"""
         if event.key == pygame.K_e:
-            checkPosition("end", runtime[1], grid.data[row][col].make_end, end_position, row, col)
+            checkPosition(
+                "end", runtime[1], grid.data[row][col].make_end, end_position, row, col
+            )
             runtime[1] = True
         """Reset grid"""
         if event.key == pygame.K_r:
@@ -72,7 +96,11 @@ def handle_keyboard_input(event, grid: Grid, row: int, col: int, runtime: [bool]
 """
 This function combines user's keyboard and mouse input and checks for pygame quit event
 """
-def handle_input(event: Event, grid: Grid, runtime: [bool], start_position, end_position) -> None:
+
+
+def handle_input(
+    event: Event, grid: Grid, runtime: [bool], start_position, end_position
+) -> None:
     if event.type == pygame.QUIT:
         pygame.quit()
         sys.exit()

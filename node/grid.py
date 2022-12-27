@@ -27,7 +27,12 @@ class Grid:
             grid.append([])
             for col in range(self.width):
                 nodeType: NodeType = NodeType.BLANK
-                if row == self.height - 1 or row == 0 or col == self.width - 1 or col == 0:
+                if (
+                    row == self.height - 1
+                    or row == 0
+                    or col == self.width - 1
+                    or col == 0
+                ):
                     nodeType = NodeType.BARRIER
                 node = Node(row, col, nodeType)
                 grid[row].append(node)
@@ -58,7 +63,10 @@ class Grid:
 
             row: int = current_node.row
             col: int = current_node.col
-            if current_node.row == self.end_position[0] and current_node.col == self.end_position[1]:
+            if (
+                current_node.row == self.end_position[0]
+                and current_node.col == self.end_position[1]
+            ):
                 self.create_path(came_from, current_node)
                 return True
             if row <= 0 or col <= 0 or row >= self.height - 1 or col >= self.width - 1:
@@ -75,7 +83,9 @@ class Grid:
                 temp_g_cost = current_node.g_cost + 1
                 if temp_g_cost > neighbor.g_cost:
                     neighbor.g_cost = temp_g_cost
-                    neighbor.h_cost = get_eucl_dist(adj_x, self.end_position[0], adj_y, self.end_position[1])
+                    neighbor.h_cost = get_eucl_dist(
+                        adj_x, self.end_position[0], adj_y, self.end_position[1]
+                    )
                     neighbor.total_cost = neighbor.g_cost + neighbor.h_cost
                     neighbor.make_open()
                     came_from[neighbor] = current_node
@@ -115,9 +125,19 @@ class Grid:
 
     def draw_grid(self, window):
         for row in range(self.width):
-            pygame.draw.line(window, BLACK, (0, row * SQUARE_SIZE), (WINDOW_HEIGHT, row * SQUARE_SIZE))
+            pygame.draw.line(
+                window,
+                BLACK,
+                (0, row * SQUARE_SIZE),
+                (WINDOW_HEIGHT, row * SQUARE_SIZE),
+            )
             for col in range(self.width):
-                pygame.draw.line(window, BLACK, (col * SQUARE_SIZE, 0), (col * SQUARE_SIZE, WINDOW_WIDTH))
+                pygame.draw.line(
+                    window,
+                    BLACK,
+                    (col * SQUARE_SIZE, 0),
+                    (col * SQUARE_SIZE, WINDOW_WIDTH),
+                )
 
     def clear_grid(self):
         self.data = self.create_node_grid()
