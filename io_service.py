@@ -4,13 +4,13 @@ import pygame
 from pygame.event import Event
 
 from constants import SQUARE_SIZE
-from node import Grid, Node
+from node import Grid, Node, NodeType
 from utils import get_mouse_pos
 
 """
 This function checks for valid start or end position
-if the position is valid node and coordinates list at the given position are modified
-otherwise error message is printed
+if the position is valid, coordinates at the given position will be modified
+otherwise error message will be printed
 """
 
 
@@ -61,28 +61,33 @@ def handle_keyboard_input(
 ) -> None:
     # doesn't allow any strokes during path finding
     if event.type == pygame.KEYDOWN and not runtime[2]:
-        """Start position"""
-        if event.key == pygame.K_s:
-            checkPosition(
-                "start",
-                runtime[0],
-                grid.data[row][col].make_path,
-                start_position,
-                row,
-                col,
-            )
-            runtime[0] = True
-        """End position"""
-        if event.key == pygame.K_e:
-            checkPosition(
-                "end", runtime[1], grid.data[row][col].make_end, end_position, row, col
-            )
-            runtime[1] = True
+        if grid.data[row][col].type != NodeType.BARRIER:
+            """Start position"""
+            if event.key == pygame.K_s:
+                checkPosition(
+                    "start",
+                    runtime[0],
+                    grid.data[row][col].make_path,
+                    start_position,
+                    row,
+                    col,
+                )
+                runtime[0] = True
+            """End position"""
+            if event.key == pygame.K_e:
+                checkPosition(
+                    "end",
+                    runtime[1],
+                    grid.data[row][col].make_end,
+                    end_position,
+                    row,
+                    col,
+                )
+                runtime[1] = True
         """Reset grid"""
         if event.key == pygame.K_r:
             grid.clear_grid()
-            runtime[0] = False
-            runtime[1] = False
+            runtime[0], runtime[1] = False, False
         """Find path"""
         if event.key == pygame.K_p:
             if runtime[0] and runtime[1]:
@@ -94,7 +99,7 @@ def handle_keyboard_input(
 
 
 """
-This function combines user's keyboard and mouse input and checks for pygame quit event
+This function handles mouse and keyboard input
 """
 
 

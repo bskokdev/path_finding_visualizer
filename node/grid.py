@@ -3,7 +3,7 @@ from queue import PriorityQueue
 import pygame
 
 from constants import BLACK, SQUARE_SIZE, WHITE, WINDOW_WIDTH, WINDOW_HEIGHT
-from utils import get_eucl_dist, get_manh_distance
+from utils import get_eucl_dist
 from . import NodeType
 from .node import Node
 
@@ -14,33 +14,38 @@ class Grid:
         self.height: int = width
         self.width: int = width
         self.data: [[Node]] = self.create_node_grid()
+        # start and end position are represented as lists so they are mutable
         self.start_position: list[int, int] = [0, 0]
         self.end_position: list[int, int] = [0, 0]
+
+    """
+    This function marks the edge nodes as barriers
+    """
+
+    def make_edges_barriers(self, grid: [[Node]]):
+        for i in range(self.height):
+            grid[0][i].make_barrier()
+            grid[self.width - 1][i].make_barrier()
+        for i in range(self.width):
+            grid[i][0].make_barrier()
+            grid[i][self.height - 1].make_barrier()
 
     """
     This function creates and returns 2d array of Nodes from height and width
     """
 
     def create_node_grid(self) -> [[Node]]:
-        grid = []
-        for row in range(self.height):
-            grid.append([])
-            for col in range(self.width):
-                nodeType: NodeType = NodeType.BLANK
-                if (
-                    row == self.height - 1
-                    or row == 0
-                    or col == self.width - 1
-                    or col == 0
-                ):
-                    nodeType = NodeType.BARRIER
-                node = Node(row, col, nodeType)
-                grid[row].append(node)
+        grid: [[Node]] = [
+            [Node(row, col, NodeType.BLANK) for col in range(self.width)]
+            for row in range(self.height)
+        ]
+        self.make_edges_barriers(grid)
         return grid
 
     """
     This function visualizes A* search from start to end node
-    each node has 8 neighbors - this can be changed by dRow, dCol with 4 params and using manhattan distance
+    node has 8 neighbors
+    node can also have just 4 neighbors - Manhattan distance
     open list is represented as PriorityQueue (min heap)
     """
 
@@ -49,6 +54,7 @@ class Grid:
         dRow = [-1, -1, -1, 0, 0, 1, 1, 1]
         dCol = [-1, 0, 1, -1, 1, -1, 0, 1]
 
+        # use this for only 4 directions
         # dRow = [-1, 1, 0, 0]
         # dCol = [0, 0, 1, -1]
 
@@ -63,24 +69,31 @@ class Grid:
 
             row: int = current_node.row
             col: int = current_node.col
+            # found path
             if (
                 current_node.row == self.end_position[0]
                 and current_node.col == self.end_position[1]
             ):
                 self.create_path(came_from, current_node)
                 return True
-            if row <= 0 or col <= 0 or row >= self.height - 1 or col >= self.width - 1:
-                continue
-            if current_node.type == NodeType.BARRIER:
+            # bounds check
+            if (
+                row <= 0
+                or col <= 0
+                or row >= self.height
+                or col >= self.width
+                or current_node.type == NodeType.BARRIER
+            ):
                 continue
             # traversal through connected nodes
-            for i in range(len(dRow)):
-                adj_x = row + dRow[i]
-                adj_y = col + dCol[i]
+            for offsetRow, offsetCol in zip(dRow, dCol):
+                # calc offset for row and col = coordinates of each neighbor
+                adj_x, adj_y = (row + offsetRow), (col + offsetCol)
                 neighbor: Node = self.data[adj_x][adj_y]
                 if neighbor in closed_list or neighbor.is_barrier():
                     continue
                 temp_g_cost = current_node.g_cost + 1
+                # looking for better path
                 if temp_g_cost > neighbor.g_cost:
                     neighbor.g_cost = temp_g_cost
                     neighbor.h_cost = get_eucl_dist(
@@ -92,6 +105,7 @@ class Grid:
                 if neighbor not in open_list.queue:
                     open_list.put(neighbor)
 
+            # updating the grid
             self.draw_grid_with_nodes()
             if current_node != start:
                 current_node.make_closed()
@@ -120,7 +134,7 @@ class Grid:
         pygame.display.update()
 
     """
-    Draws only lines 
+    Draws only lines
     """
 
     def draw_grid(self, window):
