@@ -14,7 +14,7 @@ class Grid:
         self.height: int = width
         self.width: int = width
         self.data: [[Node]] = self.create_node_grid()
-        # start and end position are represented as lists so they are mutable
+        # start and end position are represented as lists, so they are mutable
         self.start_position: list[int, int] = [0, 0]
         self.end_position: list[int, int] = [0, 0]
 
@@ -71,18 +71,18 @@ class Grid:
             col: int = current_node.col
             # found path
             if (
-                current_node.row == self.end_position[0]
-                and current_node.col == self.end_position[1]
+                    current_node.row == self.end_position[0]
+                    and current_node.col == self.end_position[1]
             ):
                 self.create_path(came_from, current_node)
                 return True
             # bounds check
             if (
-                row <= 0
-                or col <= 0
-                or row >= self.height
-                or col >= self.width
-                or current_node.type == NodeType.BARRIER
+                    row <= 0
+                    or col <= 0
+                    or row >= self.height
+                    or col >= self.width
+                    or current_node.type == NodeType.BARRIER
             ):
                 continue
             # traversal through connected nodes

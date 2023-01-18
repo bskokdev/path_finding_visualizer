@@ -15,12 +15,12 @@ otherwise error message will be printed
 
 
 def checkPosition(
-    position_type: str,
-    is_taken: bool,
-    modify_node,
-    coordinates: list[int, int],
-    row: int,
-    col: int,
+        position_type: str,
+        is_taken: bool,
+        modify_node,
+        coordinates: list[int, int],
+        row: int,
+        col: int,
 ) -> None:
     if position_type == "start" and is_taken:
         print("Only one starting position!")
@@ -57,7 +57,7 @@ P = find the shortest path
 
 
 def handle_keyboard_input(
-    event, grid: Grid, row: int, col: int, runtime: [bool], start_position, end_position
+        event, grid: Grid, row: int, col: int, runtime: [bool], start_position, end_position
 ) -> None:
     # doesn't allow any strokes during path finding
     if event.type == pygame.KEYDOWN and not runtime[2]:
@@ -93,7 +93,10 @@ def handle_keyboard_input(
             if runtime[0] and runtime[1]:
                 runtime[2] = True
                 if grid.find_path_between_start_end():
-                    runtime[2] = False
+                    print("Path found")
+                else:
+                    print("No path")
+                runtime[2] = False
             else:
                 print("no start or end position!")
 
@@ -104,7 +107,7 @@ This function handles mouse and keyboard input
 
 
 def handle_input(
-    event: Event, grid: Grid, runtime: [bool], start_position, end_position
+        event: Event, grid: Grid, runtime: [bool], start_position, end_position
 ) -> None:
     if event.type == pygame.QUIT:
         pygame.quit()
