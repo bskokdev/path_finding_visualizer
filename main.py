@@ -23,7 +23,8 @@ def main() -> None:
         canvas.draw_grid_with_nodes()
         for event in pygame.event.get():
             handle_input(
-                event, canvas, runtime, canvas.start_position, canvas.end_position
+                event, canvas, runtime,
+                canvas.start_position, canvas.end_position
             )
 
 
