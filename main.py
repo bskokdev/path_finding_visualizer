@@ -6,7 +6,7 @@ from constants import (
     NODE_GRID_SIDE_SIZE,
     RUNTIME_ARGS_COUNT,
 )
-from io_service import handle_input
+from io_module import handle_input
 from node import Grid
 
 
