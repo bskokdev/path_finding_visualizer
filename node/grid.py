@@ -61,8 +61,7 @@ class Grid:
 
         # move directions
         directions = [
-            [-1, -1], [-1, 0], [-1, 1], [0, -1],
-            [0, 1], [1, -1], [1, 0], [1, 1]
+            [-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]
         ]
 
         start_node = self.data[self.start_position[0]][self.start_position[1]]
@@ -160,6 +159,7 @@ class Grid:
         Draws lines on the screen
         :param window: pygame window
         """
+
         for row in range(self.width):
             pygame.draw.line(
                 window,
@@ -179,4 +179,5 @@ class Grid:
         """
         Resets the grid to the initial state
         """
+
         self.data = self.create_node_grid()
