@@ -1,15 +1,11 @@
-"""
-COLOURS
-"""
+# colors
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (111, 216, 7)
 RED = (194, 24, 7)
 BLUE = (45, 150, 174)
 
-"""
-SIZES
-"""
+# sizes
 WINDOW_HEIGHT = 600
 WINDOW_WIDTH = 600
 SQUARE_SIZE = 20
