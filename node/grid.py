@@ -24,6 +24,19 @@ class Grid:
         self.start_position: List[int, int] = [0, 0]
         self.end_position: List[int, int] = [0, 0]
 
+    def create_node_grid(self) -> [[Node]]:
+        """
+        Creates a grid of nodes
+        :return: 2d array of nodes
+        """
+
+        grid: [[Node]] = [
+            [Node(row, col, NodeType.BLANK) for col in range(self.width)]
+            for row in range(self.height)
+        ]
+        self.make_edges_barriers(grid)
+        return grid
+
     def make_edges_barriers(self, grid: [[Node]]):
         """
         Makes the edges of the grid barriers
@@ -38,19 +51,6 @@ class Grid:
         for i in range(self.width):
             grid[i][0].make_barrier()
             grid[i][self.height - 1].make_barrier()
-
-    def create_node_grid(self) -> [[Node]]:
-        """
-        Creates a grid of nodes
-        :return: 2d array of nodes
-        """
-
-        grid: [[Node]] = [
-            [Node(row, col, NodeType.BLANK) for col in range(self.width)]
-            for row in range(self.height)
-        ]
-        self.make_edges_barriers(grid)
-        return grid
 
     def find_path_between_start_end(self) -> bool:
         """
