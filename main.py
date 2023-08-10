@@ -1,16 +1,20 @@
 import pygame
 
-from node import Grid
-from io_service import handle_input
 from constants import (
     WINDOW_HEIGHT,
     WINDOW_WIDTH,
     NODE_GRID_SIDE_SIZE,
     RUNTIME_ARGS_COUNT,
 )
+from io_service import handle_input
+from node import Grid
 
 
-def main() -> None:
+def run() -> None:
+    """
+    The function which runs the program.
+    """
+
     window = pygame.display.set_mode((WINDOW_HEIGHT, WINDOW_WIDTH))
     pygame.display.set_caption("Path finding visualizer")
     canvas = Grid(NODE_GRID_SIDE_SIZE, window)
@@ -29,4 +33,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    run()
