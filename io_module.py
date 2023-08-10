@@ -31,8 +31,10 @@ def handle_input(
     # current mouse position
     row, col = get_mouse_pos(SQUARE_SIZE)
     handle_mouse_click(grid.data, row, col)
-    handle_keyboard_input(event, grid, row, col, runtime, start_position,
-                          end_position)
+    handle_keyboard_input(
+        event, grid, row, col,
+        runtime, start_position, end_position
+    )
 
 
 def handle_mouse_click(data_grid: [[Node]], row: int, col: int) -> None:
