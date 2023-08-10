@@ -1,28 +1,36 @@
+from typing import List
+
 import pygame.draw
 
-from .node_type import NodeType
 from constants import SQUARE_SIZE
-
-"""
-This class represents a single square in the grid
-"""
+from .node_type import NodeType
 
 
 class Node:
+    """
+    This class represents a single square in the grid
+    """
+
     def __init__(self, row: int, col: int, node_type: NodeType):
         self.row = row
-        self.col = col
-        self.type = node_type
-        self.neighbors = []
+        self.col: int = col
+        self.type: NodeType = node_type
+        self.neighbors: List[Node] = []
         self.g_cost: int = 0
         self.h_cost: int = 0
         self.total_cost: int = 0
 
     def draw(self, window) -> None:
+        """
+        Draws the node on the screen
+        :param window: The pygame window
+        """
+
         pygame.draw.rect(
             window,
             self.type.value,
-            (self.row * SQUARE_SIZE, self.col * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE),
+            (self.row * SQUARE_SIZE, self.col * SQUARE_SIZE,
+             SQUARE_SIZE, SQUARE_SIZE)
         )
 
     def make_end(self) -> None:
