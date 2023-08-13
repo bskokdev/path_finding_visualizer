@@ -4,7 +4,7 @@ import pygame
 from pygame.event import Event
 
 from constants import SQUARE_SIZE
-from node import Grid, Node, NodeType
+from graph import Grid, Node, NodeType
 from utils import get_mouse_pos
 
 """

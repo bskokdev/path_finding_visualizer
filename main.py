@@ -7,7 +7,7 @@ from constants import (
     RUNTIME_ARGS_COUNT,
 )
 from io_module import handle_input
-from node import Grid
+from graph import Grid
 
 
 def run() -> None:
