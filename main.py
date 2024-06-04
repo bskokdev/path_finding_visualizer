@@ -19,9 +19,9 @@ def run() -> None:
     pygame.display.set_caption("Path finding visualizer")
     canvas = Grid(NODE_GRID_SIDE_SIZE, window)
 
-    # [0] = is_start
-    # [1] = is_end
-    # [2] = is_running
+    # runtime[0] = is_start
+    # runtime[1] = is_end
+    # runtime[2] = is_running
     runtime = [False] * RUNTIME_ARGS_COUNT
     while True:
         canvas.draw_grid_with_nodes()

@@ -70,11 +70,12 @@ class Grid:
 
         came_from = {}
         while open_list:
-            curr: Node = open_list.get()
+            curr = open_list.get()
             closed_list.add(curr)
 
             row, col = curr.row, curr.col
-            # bounds check
+
+            # check if coordinates are in bounds and not a barrier
             if not self.is_in_bounds(row, col) or curr.is_barrier():
                 continue
 
@@ -83,33 +84,36 @@ class Grid:
                 self.create_path(came_from, curr)
                 return True
 
+            # traverse all the neighbours nodes to the current one
             for dx, dy in directions:
-                nr, nc = row + dx, col + dy
-                nei: Node = self.data[nr][nc]
+                new_row, new_col = row + dy, col + dx
+                neighbour = self.data[new_row][new_col]
 
-                # invalid node
-                if nei in closed_list or nei.is_barrier():
+                # invalid neighbour node
+                if neighbour in closed_list or neighbour.is_barrier():
                     continue
-                temp_g_cost = curr.g_cost + 1
-                # looking for a better path
-                if temp_g_cost > nei.g_cost:
-                    nei.g_cost = temp_g_cost
-                    nei.h_cost = get_eucl_dist(
-                        nr, self.end_position[0],
-                        nc, self.end_position[1]
-                    )
-                    nei.total_cost = nei.g_cost + nei.h_cost
-                    nei.make_open()
 
-                    # update the parent of nei to the current node
-                    came_from[nei] = curr
-                if nei not in open_list.queue:
-                    open_list.put(nei)
+                temp_g_cost = curr.g_cost + 1
+                # look for a better path
+                if temp_g_cost > neighbour.g_cost:
+                    neighbour.g_cost = temp_g_cost
+                    neighbour.h_cost = get_eucl_dist(
+                        new_row, self.end_position[0],
+                        new_col, self.end_position[1]
+                    )
+                    neighbour.total_cost = neighbour.g_cost + neighbour.h_cost
+                    neighbour.make_open()
+
+                    # update the parent of neighbour to the current node
+                    came_from[neighbour] = curr
+                if neighbour not in open_list.queue:
+                    open_list.put(neighbour)
 
             # re-render the grid
             self.draw_grid_with_nodes()
             if curr != start_node:
                 curr.make_closed()
+
         return False
 
     def is_end(self, row: int, col: int) -> bool:
@@ -151,6 +155,7 @@ class Grid:
         for row in self.data:
             for node in row:
                 node.draw(self.window)
+
         self.draw_grid(self.window)
         pygame.display.update()
 
@@ -160,7 +165,7 @@ class Grid:
         :param window: pygame window
         """
 
-        for row in range(self.width):
+        for row in range(self.height):
             pygame.draw.line(
                 window,
                 BLACK,
