@@ -1,3 +1,2 @@
-from .node import Node
-from .node_type import NodeType
 from .grid import Grid
+from .node import Node, NodeType

@@ -3,9 +3,9 @@ import sys
 import pygame
 from pygame.event import Event
 
-from constants import SQUARE_SIZE
 from graph import Grid, Node, NodeType
-from utils import get_mouse_pos
+from graph.grid_constants import SQUARE_SIZE
+from graph.position import get_mouse_pos
 
 """
 This module handles all the input from the user.
@@ -30,14 +30,14 @@ def handle_input(
         sys.exit()
     # current mouse position
     row, col = get_mouse_pos(SQUARE_SIZE)
-    handle_mouse_click(grid.data, row, col)
-    handle_keyboard_input(
+    _handle_mouse_click(grid.data, row, col)
+    _handle_keyboard_input(
         event, grid, row, col,
         runtime, start_position, end_position
     )
 
 
-def handle_mouse_click(data_grid: [[Node]], row: int, col: int) -> None:
+def _handle_mouse_click(data_grid: [[Node]], row: int, col: int) -> None:
     """
     Handles mouse clicks.
     Left click = barrier
@@ -55,7 +55,7 @@ def handle_mouse_click(data_grid: [[Node]], row: int, col: int) -> None:
         square.reset()
 
 
-def handle_keyboard_input(
+def _handle_keyboard_input(
         event, grid: Grid, row: int, col: int,
         runtime: [bool],
         start_position, end_position
@@ -82,7 +82,7 @@ def handle_keyboard_input(
         if grid.data[row][col].type != NodeType.BARRIER:
             # Mark as the start position
             if event.key == pygame.K_s:
-                check_position(
+                _check_position(
                     "start",
                     runtime[0],
                     grid.data[row][col].make_path,
@@ -93,7 +93,7 @@ def handle_keyboard_input(
                 runtime[0] = True
             # Mark as the end position
             if event.key == pygame.K_e:
-                check_position(
+                _check_position(
                     "end",
                     runtime[1],
                     grid.data[row][col].make_end,
@@ -104,7 +104,7 @@ def handle_keyboard_input(
                 runtime[1] = True
         # Reset grid
         if event.key == pygame.K_r:
-            grid.clear_grid()
+            grid._clear_grid()
             runtime[0], runtime[1] = False, False
         # Find path
         if event.key == pygame.K_p:
@@ -119,7 +119,7 @@ def handle_keyboard_input(
                 print("no start or end position!")
 
 
-def check_position(
+def _check_position(
         position_type: str, is_taken: bool,
         modify_node, coordinates,
         row: int, col: int,

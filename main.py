@@ -1,13 +1,12 @@
 import pygame
 
-from constants import (
+from app_io import handle_input
+from graph import Grid
+from graph.grid_constants import (
     WINDOW_HEIGHT,
     WINDOW_WIDTH,
-    NODE_GRID_SIDE_SIZE,
-    RUNTIME_ARGS_COUNT,
+    GRID_SIDE_SIZE,
 )
-from io_module import handle_input
-from graph import Grid
 
 
 def run() -> None:
@@ -17,14 +16,14 @@ def run() -> None:
 
     window = pygame.display.set_mode((WINDOW_HEIGHT, WINDOW_WIDTH))
     pygame.display.set_caption("Path finding visualizer")
-    canvas = Grid(NODE_GRID_SIDE_SIZE, window)
+    canvas = Grid(GRID_SIDE_SIZE, window)
 
     # runtime[0] = is_start
     # runtime[1] = is_end
     # runtime[2] = is_running
-    runtime = [False] * RUNTIME_ARGS_COUNT
+    runtime = [False] * 3
     while True:
-        canvas.draw_grid_with_nodes()
+        canvas._draw_grid_with_nodes()
         for event in pygame.event.get():
             handle_input(
                 event, canvas, runtime,

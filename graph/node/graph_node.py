@@ -2,7 +2,6 @@ from typing import List
 
 import pygame.draw
 
-from constants import SQUARE_SIZE
 from .node_type import NodeType
 
 
@@ -11,7 +10,7 @@ class Node:
     This class represents a single square in the grid
     """
 
-    def __init__(self, row: int, col: int, node_type: NodeType):
+    def __init__(self, row: int, col: int, node_type: NodeType, size: int):
         self.row = row
         self.col: int = col
         self.type: NodeType = node_type
@@ -19,6 +18,7 @@ class Node:
         self.g_cost: int = 0
         self.h_cost: int = 0
         self.total_cost: int = 0
+        self.size = size
 
     def draw(self, window) -> None:
         """
@@ -29,8 +29,7 @@ class Node:
         pygame.draw.rect(
             window,
             self.type.value,
-            (self.row * SQUARE_SIZE, self.col * SQUARE_SIZE,
-             SQUARE_SIZE, SQUARE_SIZE)
+            (self.row * self.size, self.col * self.size, self.size, self.size)
         )
 
     def make_end(self) -> None:
@@ -39,10 +38,10 @@ class Node:
     def make_barrier(self) -> None:
         self.type = NodeType.BARRIER
 
-    def make_open(self):
+    def open(self):
         self.type = NodeType.OPEN
 
-    def make_closed(self):
+    def close(self):
         self.type = NodeType.CLOSED
 
     def make_path(self):

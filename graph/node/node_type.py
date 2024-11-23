@@ -1,6 +1,6 @@
 from enum import Enum
 
-from constants import GREEN, RED, BLACK, WHITE, BLUE
+from colors import GREEN, RED, BLACK, WHITE, BLUE
 
 
 class NodeType(Enum):
